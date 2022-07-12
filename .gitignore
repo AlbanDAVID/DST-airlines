@@ -1,1 +1,3 @@
 src/.ipynb_checkpoints/Etape1-checkpoint.ipynb
+# non prise en compte de tous les checkpoints
+.ipynb_checkpoints
