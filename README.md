@@ -19,6 +19,6 @@ On vous demande d'organiser les données via différentes bases de données :
 
 Il faudra penser à l'architecture des données, notamment comment relier les différentes données entre elles.
 Livrable :
-* Tout document expliquant l'architecture choisie (Diagramme UML)
-* Fichier implémentant les bases de données
-* Fichier de requête
+  * Tout document expliquant l'architecture choisie (Diagramme UML)
+  * Fichier implémentant les bases de données
+  * Fichier de requête
