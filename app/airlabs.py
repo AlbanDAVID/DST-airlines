@@ -1,8 +1,12 @@
 import requests
 import json
+from static import * 
+
+
+
 
 params = {
-  'api_key': 'fdab6336-d852-468d-8045-fb8350748f74',
+  'api_key': API_KEY,
   'flight_iata': 'LH1706'
 }
 method = 'flight'
