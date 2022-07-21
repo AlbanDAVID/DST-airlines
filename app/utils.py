@@ -1,4 +1,4 @@
 import json
 
 def transformGetFlightAirlabs(json_result):
-    # TO DO
+    json_result = json.loads(json_result)
