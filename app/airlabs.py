@@ -7,7 +7,7 @@ from static import *
 
 params = {
   'api_key': API_KEY,
-  'flight_iata': 'LH1706'
+  'flight_iata': 'LH2001'
 }
 method = 'flight'
 api_base = 'http://airlabs.co/api/v9/'
