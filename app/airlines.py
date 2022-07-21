@@ -17,7 +17,7 @@ headers = {
     'Accept': 'application/json',
 }
 
-response = requests.get('https://api.lufthansa.com/v1/flightschedules/passenger', headers=headers)
+response = requests.get('https://api.lufthansa.com/v1/operations/customerflightinformation/LH2419/2022-07-20', headers=headers)
 
 
 print(response.json())
