@@ -1,0 +1,4 @@
+[nbconvert.exporters]
+PDFviaHTML = notebook_as_pdf:PDFExporter
+pdfviahtml = notebook_as_pdf:PDFExporter
+
