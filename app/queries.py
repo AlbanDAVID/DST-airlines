@@ -57,8 +57,8 @@ class LufthansaQueries:
     
     def get_result(self):
 
-        response = requests.get(self.url, headers=self.headers)
-        print(response.json())
+       return requests.get(self.url, headers=self.headers)
+
 
 
 class getFlightInfoLuf(LufthansaQueries):
