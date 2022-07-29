@@ -23,7 +23,7 @@ class Authentication:
 
     def get_header(self):
         
-        return {'Accept': 'application/json', 'Authorization':'Bearer ' +self.token}
+        return {'accept': 'application/json', 'Authorization':'Bearer ' +self.token}
     
    
         
@@ -38,11 +38,11 @@ class RequestFactory:
         
         response = requests.get(url, headers=self.headers) 
         
-        if response.status_code == 200:
+        if response.status_code == 200 or response.status_code == 206:
             print(url + "::" + str(response.status_code))
             return response.json()
         else : 
             print(url + "xx" + str(response.status_code))
-        
+            print(response)
             return "invalid request"
 

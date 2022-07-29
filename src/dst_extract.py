@@ -6,7 +6,7 @@ Created on Fri Jul 22 09:29:24 2022
 @author: houda
 """
 
-
+import json
 
 class DstStatic :
     
@@ -78,9 +78,33 @@ class DstVariable:
         
         url = self.base_url + 'v1/operations/customerflightinformation/' + flight_number +'/' + date
         return self.factory.create_request(url)
-        
-
     
+    def pprint(self, response):
+        print(json.dumps(response, indent=4, sort_keys=True))
+    
+    def get_flights(self, startDate, endDate, daysOfOperation, airlines = "LH", flightNumberRanges = "",  timeMode = "UTC", origin = "", destination = "" , aircraftTypes = ""):
+        
+        if  flightNumberRanges == ""  and origin == "" and destination == "" and aircraftTypes == "":
+            url = self.base_url + "v1/flight-schedules/flightschedules/passenger?" + \
+            "airlines=" + airlines + \
+            "&startDate=" + startDate + \
+            "&endDate=" + endDate + \
+            "&daysOfOperation=" + daysOfOperation + \
+            "&timeMode=" + timeMode          
+        else: 
+            url = self.base_url + "v1/flight-schedules/flightschedules/passenger?" + \
+            "airlines=" + airlines + \
+            "flightNumberRanges=" + flightNumberRanges + \
+            "&startDate=" + startDate + \
+            "&endDate=" + endDate + \
+            "&daysOfOperation=" + daysOfOperation + \
+            "&timeMode=" + timeMode + \
+            "&origin=" + origin + \
+            "&destination=" + destination + \
+            "&aircraftTypes=" + aircraftTypes
+
+        return self.factory.create_request(url)
+
     
     
     
