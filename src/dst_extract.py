@@ -82,34 +82,35 @@ class DstVariable:
     def pprint(self, response):
         print(json.dumps(response, indent=4, sort_keys=True))
     
-    def get_flights(self, startDate, endDate, daysOfOperation, airlines = "LH", flightNumberRanges = "",  timeMode = "UTC", origin = "", destination = "" , aircraftTypes = ""):
+    def get_flights(self, startDate, endDate, daysOfOperation,flightType ="", airlines = "LH", flightNumberRanges = "",  timeMode = "UTC", origin = "", destination = "" , aircraftTypes = ""):
         
-        if  flightNumberRanges == ""  and origin == "" and destination == "" and aircraftTypes == "":
-            url = self.base_url + "v1/flight-schedules/flightschedules/passenger?" + \
-            "airlines=" + airlines + \
-            "&startDate=" + startDate + \
-            "&endDate=" + endDate + \
-            "&daysOfOperation=" + daysOfOperation + \
-            "&timeMode=" + timeMode          
-        else: 
-            url = self.base_url + "v1/flight-schedules/flightschedules/passenger?" + \
-            "airlines=" + airlines + \
-            "flightNumberRanges=" + flightNumberRanges + \
-            "&startDate=" + startDate + \
-            "&endDate=" + endDate + \
-            "&daysOfOperation=" + daysOfOperation + \
-            "&timeMode=" + timeMode + \
-            "&origin=" + origin + \
-            "&destination=" + destination + \
-            "&aircraftTypes=" + aircraftTypes
+        url = self.base_url + "v1/flight-schedules/flightschedules"
+        if (flightType != ""):
+            url += "/" + flightType
+        url += "?"
 
+        url = url + "airlines=" + airlines
+        
+        if flightNumberRanges != "":
+            url  = url + "&flightNumberRanges=" + flightNumberRanges
+            
+        url = url + "&startDate=" + startDate + "&endDate=" + endDate + \
+        "&daysOfOperation=" + daysOfOperation + \
+        "&timeMode=" + timeMode
+        
+        if  origin != "":
+            "&origin=" + origin 
+        if  destination != "":
+            "&destination=" + destination
+        if  aircraftTypes != "":
+            "&aircraftTypes=" + aircraftTypes
+        
         return self.factory.create_request(url)
 
+
     
     
-    
-    
-    
+   
     
     
     
