@@ -24,8 +24,7 @@ class Authentication:
     def get_header(self):
         
         return {'accept': 'application/json', 'Authorization':'Bearer ' +self.token}
-    #implementer fonction airlabs_auth()
-    
+   
         
         
 class RequestFactory:

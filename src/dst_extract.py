@@ -5,7 +5,7 @@ Created on Fri Jul 22 09:29:24 2022
 
 @author: houda
 """
-
+import requests
 import json
 
 class DstStatic :
@@ -107,10 +107,43 @@ class DstVariable:
         
         return self.factory.create_request(url)
 
-
-    
-    
+class DstRealTime:
    
+    def __init__(self, api_key):
+        self.api_key = api_key
+    base_url = 'http://airlabs.co/api/v9/'
+    
+    def get_flights(self):
+     
+          url = self.base_url + 'flights' + '?' + 'api_key' + '=' + self.api_key
+          api_response = requests.get(url)
+        
+          return(api_response.json())
+
+        
+    def get_flights_by_flight_iata(self, flight_iata):
+     
+         params = {
+                  'api_key': self.api_key,
+                   'flight_iata': flight_iata
+                }
+    
+         url = self.base_url + 'flight'
+         api_response = requests.get(url, params)
+         return(api_response.json())
+
+   
+     
+    def get_flights_by_airline_iata(self, airline_iata):
+      
+          params = {
+                   'api_key': self.api_key,
+                    'airline_iata': airline_iata
+                 }
+     
+          url = self.base_url + 'flights'
+          api_response = requests.get(url, params)
+          return(api_response.json())
     
     
     
