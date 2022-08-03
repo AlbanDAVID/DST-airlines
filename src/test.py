@@ -5,42 +5,59 @@ Created on Thu Jul 28 12:26:53 2022
 
 @author: houda.el-mir
 """
-import lufthansa_utils as lu
-import dst_extract as de 
-import json
-auth = lu.Authentication(client_key = "exzk4xtp9pr3txzssb2zqqd4", client_secret = "PfMrRRe6AyyB4kTJWdSx")
-header = auth.get_header()
+import dst_utils as lu
+import dst_extract as de
 
+
+
+
+###########################################################Lufthansa####################################################
+
+# Authentification
+auth = lu.Authentication(client_key = "exzk4xtp9pr3txzssb2zqqd4", client_secret = "PfMrRRe6AyyB4kTJWdSx")
+
+# get header
+header = auth.get_header()
+#print(header)
+# Instanciation de la classe RequestFactory du module dst_utils
 rf = lu.RequestFactory(header)
 
+## donnees statiques 
+# Instanciation de la classe DstStatic du module dst_extract
 dd = de.DstStatic(rf)
 
+# affichage des donnees des aerports
 print(dd.get_airport_data("ALL"))
 
+# affichage des donnees des pays
+print(dd.get_countries_data("ALL"))
+
+## Donnees variables 
+# Instanciation de la classe DstVariable du module dst_extract
 ddv = de.DstVariable(rf)
 
-#print(ddv.get_flight_route("JFK", "FRA",  "2022-07-27"))
+#affichage des donnees du vol en provenance de New York et a destination de France en date du 27/07/2022
+ddv.pprint(ddv.get_flight_route("JFK", "FRA",  "2022-07-27"))
 
-print(json.dumps(ddv.get_flight_route("JFK", "FRA",  "2022-07-27"), indent=4, sort_keys=True))
+#affichage des vols (plusieurs vols a la fois pour une periode) du 01 au 29 juillet 2022 
+ddv.pprint(ddv.get_flights(startDate="01JUL22",endDate="29JUL22",daysOfOperation="1234567", timeMode = "UTC", flightType="passenger"))
 
-aeroports_data = json.dumps(dd.get_airport_data("ALL"), indent=4, sort_keys=True)
-aircrafts_data = json.dumps(dd.get_aircraft_data("ALL"), indent=4, sort_keys=True)
-airlines_data = json.dumps(dd.get_airline_data("ALL"), indent=4, sort_keys=True)
-countries_data = json.dumps(dd.get_countries_data("ALL"), indent=4, sort_keys=True)
-cities_data = json.dumps(dd.get_cities_data("ALL"), indent=4, sort_keys=True)
+###########################################################Airlabs####################################################
+## Donnees temps reel 
 
-ddv.pprint(ddv.get_flights(flightType="passenger", startDate="01JUL22",endDate="29JUL22",daysOfOperation="1234567", timeMode = "UTC"))
+api_key = "12de9152-83be-44ae-a711-958190764930"
 
+# Instanciation de la classe DstRealTime du module dst_extract
+dr = de.DstRealTime(api_key)
 
+# affichage des donnees de tous les vols en temps reel
+dr.get_flights()
 
+# Affichage des donnees de tous les vols Lufthansa en temps reel
+dr.get_flights_by_airline_iata('LH')
 
-
-
-
-
-
-
-
+#Donnees temps reel du vol (un seul) 'LH2001' 
+dr.get_flight_by_flight_iata('LH2001')
 
 
 
