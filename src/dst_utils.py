@@ -42,7 +42,6 @@ class RequestFactory:
             return response.json()
         else : 
             print(url + "xx" + str(response.status_code))
-            print(response)
             return "invalid request"
 
 

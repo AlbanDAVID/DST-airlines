@@ -29,6 +29,8 @@ dd = de.DstStatic(rf)
 # affichage des donnees des aerports
 print(dd.get_airport_data("ALL"))
 
+# Sauvegarder dans un fichier json
+dd.get_airport_data("ALL", write_json = True)
 # affichage des donnees des pays
 print(dd.get_countries_data("ALL"))
 
@@ -39,8 +41,11 @@ ddv = de.DstVariable(rf)
 #affichage des donnees du vol en provenance de New York et a destination de France en date du 27/07/2022
 ddv.pprint(ddv.get_flight_route("JFK", "FRA",  "2022-07-27"))
 
+#Sauvegarder dans un fichier json 
+ddv.get_flight_route("JFK", "FRA",  "2022-07-27", write_json = True)
+
 #affichage des vols (plusieurs vols a la fois pour une periode) du 01 au 29 juillet 2022 
-ddv.pprint(ddv.get_flights(startDate="01JUL22",endDate="29JUL22",daysOfOperation="1234567", timeMode = "UTC", flightType="passenger"))
+ddv.pprint(ddv.get_flights(write_json=True,startDate="01JUL22",endDate="29JUL22",daysOfOperation="1234567", timeMode = "UTC", flightType="passenger"))
 
 ###########################################################Airlabs####################################################
 ## Donnees temps reel 
@@ -51,7 +56,7 @@ api_key = "12de9152-83be-44ae-a711-958190764930"
 dr = de.DstRealTime(api_key)
 
 # affichage des donnees de tous les vols en temps reel
-dr.get_flights()
+dr.get_flights(write_json=True)
 
 # Affichage des donnees de tous les vols Lufthansa en temps reel
 dr.get_flights_by_airline_iata('LH')
