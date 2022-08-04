@@ -60,7 +60,7 @@ dr = de.DstRealTime(api_key)
 dr.get_flights(write_json=True)
 
 # affichage des delays de tous les vols concernés par un retard
-dr.get_delays('40', 'departures', True)
+dr.get_delays('40', 'departures', 'LH', False)
 
 # Affichage des donnees de tous les vols Lufthansa en temps reel
 #dr.get_flights_by_airline_iata('LH')
