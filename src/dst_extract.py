@@ -206,6 +206,31 @@ class DstRealTime:
             
         return(api_response.json())
 
+    def get_delays(self, delay, type, iata, write_json = False):
+        """
+        Retourne les avions qui ont un retard d'au moins 30 minutes.
+        Il est possible de visualiser le retard au départ de l'aéroport ou bien à son arrivée
+
+        Parametres: 
+            delay (string). Le retard en minutes (doit être supérieur à 30 minutes) Ex : 35 
+            type (string). Le type d'information souhaitée (au départ ou bien à l'arrivée) Ex : 'arrivals ou 'departures'
+            iata (sting). Le code iata de la compagnie aérienne. Ex : 'LH' si l'on soihaite avoir les ingos sur les delays de la compagnie Lufthansa
+
+        Retourne:
+            Les infos sur le retard mais également le terminal de départ et d'arrivée (+ autres infos...)
+
+
+        
+        """
+        url = self.base_url + 'delays?delay=' + delay + '&type=' + type + '&airline_iata=' + iata + '&api_key=' + self.api_key
+        api_response = requests.get(url)
+        
+        if write_json and (api_response.status_code == 200 or api_response.status_code == 201):
+            self.__export_json("get_delays", api_response.json())
+            
+        return(api_response.json())
+
+
      
     def get_flights_by_airline_iata(self, airline_iata,  write_json = False):
       
@@ -237,6 +262,22 @@ class DstRealTime:
             self.__export_json("get_flights_by_filght_iata" + "_" + flight_iata, api_response.json())
             
         return(api_response.json())    
+
+    def get_delays_by_airline_iata(self, airline_iata,  write_json = False):
+      
+        params = {
+                    'api_key': self.api_key,
+                    'airline_iata': airline_iata
+                 }
+        
+        url = self.base_url + 'delays'
+        api_response = requests.get(url, params)
+        
+        if write_json and (api_response.status_code == 200 or api_response.status_code == 201):
+            self.__export_json("get_delays_by_airline_iata" + "_" + airline_iata, api_response.json())
+            
+        return(api_response.json())
+    
     
     def __export_json(self, filename, response):
         

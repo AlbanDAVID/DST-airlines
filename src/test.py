@@ -47,6 +47,7 @@ ddv.get_flight_route("JFK", "FRA",  "2022-07-27", write_json = True)
 #affichage des vols (plusieurs vols a la fois pour une periode) du 01 au 29 juillet 2022 
 ddv.pprint(ddv.get_flights(write_json=True,startDate="01JUL22",endDate="29JUL22",daysOfOperation="1234567", timeMode = "UTC", flightType="passenger"))
 
+
 ###########################################################Airlabs####################################################
 ## Donnees temps reel 
 
@@ -58,11 +59,16 @@ dr = de.DstRealTime(api_key)
 # affichage des donnees de tous les vols en temps reel
 dr.get_flights(write_json=True)
 
+# affichage des delays de tous les vols concernés par un retard
+dr.get_delays('40', 'departures', 'LH', False)
+
 # Affichage des donnees de tous les vols Lufthansa en temps reel
-dr.get_flights_by_airline_iata('LH')
+#dr.get_flights_by_airline_iata('LH')
 
 #Donnees temps reel du vol (un seul) 'LH2001' 
-dr.get_flight_by_flight_iata('LH2001')
+#dr.get_flight_by_flight_iata('LH2001')
+
+#dr.get_delays_by_airline_iata('LH')
 
 
 
