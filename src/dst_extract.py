@@ -222,10 +222,7 @@ class DstRealTime:
 
         
         """
-        self.delay = delay
-        self.type = type
-        self.iata = iata
-        url = self.base_url + 'delays?delay=' + self.delay + '&type=' + self.type + '&airline_iata=' + self.iata + '&api_key=' + self.api_key
+        url = self.base_url + 'delays?delay=' + delay + '&type=' + type + '&airline_iata=' + iata + '&api_key=' + self.api_key
         api_response = requests.get(url)
         
         if write_json and (api_response.status_code == 200 or api_response.status_code == 201):
