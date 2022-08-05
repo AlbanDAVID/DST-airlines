@@ -5,7 +5,6 @@ Created on Thu Jul 21 23:45:27 2022
 
 @author: houda
 """
-
 import requests 
 
 class Authentication: 
@@ -34,7 +33,6 @@ class RequestFactory:
 
     def create_request(self, url):
     
-        
         response = requests.get(url, headers=self.headers) 
         
         if response.status_code == 200 or response.status_code == 206:
@@ -43,5 +41,7 @@ class RequestFactory:
         else : 
             print(url + "xx" + str(response.status_code))
             return "invalid request"
+
+        
 
 
