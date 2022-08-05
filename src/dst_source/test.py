@@ -5,9 +5,15 @@ Created on Thu Jul 28 12:26:53 2022
 
 @author: houda.el-mir
 """
-import dst_utils as lu
-import dst_extract as de
 
+import dst_utils as du
+import LufthansaStatic 
+import LufthansaVariable 
+import AirlabsStatic
+import AirlabsVariable
+import DstRealtime
+
+import requests
 
 
 
@@ -24,15 +30,17 @@ rf = lu.RequestFactory(header)
 
 ## donnees statiques 
 # Instanciation de la classe DstStatic du module dst_extract
-dd = de.LufthansaStatic(rf)
+dd = LufthansaStatic.LufthansaStatic(rf)
 
 # affichage des donnees des aerports
-print(dd.get_airport_data_luf("ALL"))
+print(dd.get_airport_data_luf())
 
 # Sauvegarder dans un fichier json
-dd.get_airport_data_luf("ALL", write_json = True)
+dd.get_airport_data_luf(write_json = True)
 # affichage des donnees des pays
-print(dd.get_countries_data_luf("ALL"))
+print(dd.get_countries_data_luf())
+
+dd.get_cities_data_luf(write_json=True)
 
 ## Donnees variables 
 # Instanciation de la classe DstVariable du module dst_extract
@@ -74,8 +82,25 @@ drt.get_delays_by_airline_iata('LH')
 das = de.AirlabsStatic(api_key)
 das.get_airlines_airlabs(write_json=True)
 das.get_cities_airlabs()
+das.get_airports_airlabs()
 # instanciation de la classe AirlabsVariable du module dst_extract
 
 dav = de.AirlabsVariable(api_key)
 
 dav.get_fleets_airlabs('LH')
+
+requests.get("https://airlabs.co/api/v9/airports?iata_code=CDG&api_key=12de9152-83be-44ae-a711-958190764930").json()
+
+dd.get_nearest_airports_luf( 7.62, 44.54)
+dd.get_nearest_airports_luf( 48.50, 2.20)
+dd.get_nearest_airports_luf( -65.3, -24.19)
+#get info 
+
+print(das.get_airports_airlabs(write_json=True))
+
+
+
+
+
+
+
