@@ -1,8 +1,29 @@
 from sqlalchemy import Table, Column, Boolean, Time, DateTime, Integer, String, ForeignKey, MetaData, create_engine, text, inspect
 import sqlite3
+import certifi
+import pymongo
+from pymongo import MongoClient
+from pprint import pprint
 
+
+# IMPORT DE LA BDD MONGODB
+ca = certifi.where()
+client = MongoClient("mongodb+srv://user01:wpvPnKP2gdPW8inB@cluster0.tyo5f.mongodb.net/?retryWrites=true&w=majority", tlsCAFile=ca)
+
+
+# IMPORT DE LA BDD MONGODB
 engine = sqlite3.connect("dst_airlines.db")    
 cursor = engine.cursor()
+
+# IMPORT DES COLLECTIONS MONGODB
+db = client['data_airlines']
+col_flights = db['airlabs_real_time_flights']
+col_fleets = db['fleet']
+col_airports = db['airports']
+col_airlines = db['airlines']
+col_cities = db['cities']
+col_countries = db['countries']
+col_delays = db['airlabs_delays']
 
 # FONCTION POUR INJECTER DES DONNEES DANS LA TABLE [real_time_flights]
 
@@ -119,5 +140,37 @@ engine.commit()
 
 
 
+
+# AUTOMATISATION sur la table test
+
+
+name_test =[
+                          'airline_iata', 'alt', 'status'
+                          ]
+
+
+airline_iata = []
+status = []
+alt = []
+
+
+for name in name_test:
+    temp_cursor = col_flights.find({},{name})
+    for x in temp_cursor:  
+        globals()[str(name)].append(x[name])
+
+
+
+for i in range(len(airline_iata)):
+
+  inject = "INSERT INTO test (airline_iata, alt, status) VALUES ({airline_iata}, {alt}, '{status}')".format(airline_iata = i, alt = alt[i], status = status[i])
+
+
+
+
+
+  cursor.execute(inject)
+
+  engine.commit()
 
 

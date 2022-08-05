@@ -4,7 +4,7 @@ import sqlite3
 engine = sqlite3.connect("dst_airlines.db")   
 cursor = engine.cursor()
 
-
+"""
 # queries pour la table real_time_flights
 results = cursor.execute("SELECT * FROM real_time_flights;")
 print(results.fetchall())
@@ -30,4 +30,9 @@ print(results.fetchall())
 
 # queries pour la table airports
 results = cursor.execute("SELECT * FROM airports;")
+print(results.fetchall())
+"""
+
+# queries pour la table test
+results = cursor.execute("SELECT * FROM test;")
 print(results.fetchall())
