@@ -133,3 +133,16 @@ delays_flights = Table(
     Column('arr_iata', String, ForeignKey("airports.iata_code"))
 )
 meta.create_all(engine)
+
+
+
+# TABLE [test]
+
+test = Table(
+    'test', meta,
+    Column('airline_iata', String, primary_key=True),
+    Column('alt', Integer),
+    Column('status', String)
+
+)
+meta.create_all(engine)
