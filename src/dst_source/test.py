@@ -6,7 +6,7 @@ Created on Thu Jul 28 12:26:53 2022
 @author: houda.el-mir
 """
 
-import dst_utils as du
+import dst_utils as lu
 import LufthansaStatic 
 import LufthansaVariable 
 import AirlabsStatic
@@ -38,13 +38,13 @@ print(dd.get_airport_data_luf())
 # Sauvegarder dans un fichier json
 dd.get_airport_data_luf(write_json = True)
 # affichage des donnees des pays
-print(dd.get_countries_data_luf())
+json_text = dd.get_countries_data_luf()
 
 dd.get_cities_data_luf(write_json=True)
 
 ## Donnees variables 
 # Instanciation de la classe DstVariable du module dst_extract
-ddv = de.LufthansaVariable(rf)
+ddv = LufthansaVariable.LufthansaVariable(rf)
 
 #affichage des donnees du vol en provenance de New York et a destination de France en date du 27/07/2022
 ddv.pprint(ddv.get_flight_route("JFK", "FRA",  "2022-08-01"))
