@@ -7,7 +7,7 @@ Les consignes projet ci-dessous:
   * Introduction de chaque membre de l'équipe
   * Explication du cadre du projet (les différentes étapes)
 
-* [ ] **Étape 1 / Découverte des sources de données disponible : `Échéance Vendredi 15 Juillet`**
+* [X] **Étape 1 / Découverte des sources de données disponible : `Échéance Vendredi 15 Juillet`**
 
   * Définir le contexte et le périmètre du projet (ne sous-estimez pas cette étape).
   * Prise en main des différentes sources de données(explorer les API fournis mais qui vous sont disponibles, les pages webs dont vous allez appliquer le webscraping (il faudra observer leur structure))
