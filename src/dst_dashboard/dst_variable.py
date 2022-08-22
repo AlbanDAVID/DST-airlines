@@ -154,8 +154,8 @@ def tabs_update(flight_iatas, theme):
                 locationmode='USA-states',
                 lon=[dep_lng, arr_lng],
                 lat=[dep_lat, arr_lat],
-                mode='lines',
-                line=dict(width=2, dash = 'solid'),
+                mode='lines+markers',
+                marker=dict(size=10, opacity=1, symbol='circle-dot'),
                 name=i,
                 hovertext = [dep_airport_name, arr_airport_name],
             )
