@@ -160,7 +160,7 @@ def tabs_update(flight_iatas, theme):
                 hovertext = [dep_airport_name, arr_airport_name],
             )
         )
-    fig = go.Figure(go.Scattergeo())
+    #fig = go.Figure(go.Scattergeo())
     fig.update_layout(
         title_text='Contour lines over globe<br>(Click and drag to rotate)',
         showlegend=True,
