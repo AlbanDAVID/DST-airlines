@@ -10,7 +10,7 @@ from dash_bootstrap_templates import ThemeChangerAIO, template_from_url
 
 map_choice=dcc.Dropdown(
     id="type",
-    options=["airports", "cities"],
+    options=["airports"],
     value="airports",
     clearable=False,
     className='dbc'
@@ -29,11 +29,11 @@ map = dbc.Card(
     Input(ThemeChangerAIO.ids.radio("theme"), "value"),
 )
 def generate_chart(values, theme):
-    if values == "statistics":
+    if values == "cities":
         fig = px.scatter_geo(
-            qd.df_airports,
-            lon='airport_lng',
-            lat='airport_lat',
+            qd.df_cities,
+            lon='city_lng',
+            lat='city_lat',
             color="country_code",
             color_continuous_scale=px.colors.cyclical.IceFire,
             projection="orthographic",
@@ -42,7 +42,7 @@ def generate_chart(values, theme):
         )
 
         fig.update_layout(mapbox_style="open-street-map")
-        fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+#       fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     elif values == "airports":
         fig = px.scatter_mapbox(
             pd.merge(qd.df_airports, qd.df_countries, on='country_code'),
