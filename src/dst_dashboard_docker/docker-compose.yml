@@ -8,8 +8,10 @@ services:
 
     dash_app_testv1:
         build: ./docker_images/dst_dashboard
+
         depends_on:
             - aws_mysql_testv1
+        
        
 
       
