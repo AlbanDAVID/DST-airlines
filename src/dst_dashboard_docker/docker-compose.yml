@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+
+    aws_mysql_testv1:
+        build: ./docker_images/aws_mysql
+        volumes:
+            - .:/home/log
+
+    dash_app_testv1:
+        build: ./docker_images/dst_dashboard
+       
+
+      
+
