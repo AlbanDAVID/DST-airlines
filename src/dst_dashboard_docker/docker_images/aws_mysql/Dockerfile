@@ -8,6 +8,8 @@ RUN pip3 install datetime
 
 ADD aws_test.py /home/aws_test/aws_test.py
 
+ADD static.py /home/aws_test/static.py
+
 WORKDIR /home/aws_test
 
 CMD python3 aws_test.py

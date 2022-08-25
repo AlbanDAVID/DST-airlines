@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import os
 from datetime import datetime
-
+import static
 
 # date and time during request
 now = datetime.now()
@@ -14,7 +14,7 @@ dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 # Connection test (password and username verification)
 
 try:
-    cnx = pymysql.connect(host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com", user = "admin", password ="hyadeb22!")
+    cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
     connection = "Successful connection"
 except OperationalError:
     connection = "Failed connection. Try another username/password"
@@ -52,7 +52,7 @@ try:
     # connexion à la BDD
 
     name_database = 'airlines5'
-    cnx = pymysql.connect(host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com", user = "admin", password ="hyadeb22!")
+    cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
     cursor = cnx.cursor()
     use_db = "use {name}".format(name = name_database)
     cursor.execute(use_db)
