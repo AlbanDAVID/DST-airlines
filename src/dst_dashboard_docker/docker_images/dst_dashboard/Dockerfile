@@ -5,6 +5,7 @@ COPY requirements.txt ./requirements.txt
 RUN pip install -r requirements.txt
 COPY . ./home
 
+ADD static.py /home/static.py
 
 WORKDIR /home
 
