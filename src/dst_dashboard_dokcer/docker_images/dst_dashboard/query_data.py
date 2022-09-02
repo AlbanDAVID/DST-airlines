@@ -1,5 +1,6 @@
 import pandas as pd
 import pymysql
+import static
 
 
 name_database = 'airlines5'
