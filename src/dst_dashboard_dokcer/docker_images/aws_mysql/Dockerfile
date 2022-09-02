@@ -6,7 +6,7 @@ RUN pip3 install pandas
 RUN pip3 install numpy
 RUN pip3 install datetime
 
-ADD aws_test.py /home/aws_test/aws_test.py
+ADD aws_testing.py /home/aws_test/aws_testing.py
 
 ADD static.py /home/aws_test/static.py
 
