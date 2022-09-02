@@ -4,7 +4,7 @@ import dst_variable as dv
 import dst_static as ds
 from dashboard import app
 from dash_bootstrap_templates import ThemeChangerAIO
-import static
+
 
 app.layout = html.Div(
     [
