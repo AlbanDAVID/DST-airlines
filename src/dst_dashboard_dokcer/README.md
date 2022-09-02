@@ -1,4 +1,4 @@
-# DST Dashboard on Docke
+# DST Dashboard on Docker
 
 ### Rationale
 This readme serves as reference for the functionality of the dashboard linked to the DST Airlines project and runing on Docker.
@@ -34,4 +34,3 @@ to acced to the dashboard, you have to connect to the adress at the address prov
 
 ## IV - How to connect to the database with static.py
 All login credentials are to be filled in the static.py file
-
