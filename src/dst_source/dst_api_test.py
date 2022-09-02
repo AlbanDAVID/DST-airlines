@@ -27,7 +27,7 @@ def test_luf_variable_data():
     lsv=lv.LufthansaVariable(rf)
     assert lsv.get_flight_route("JFK", "FRA",  "2022-08-29", False)['FlightStatusResource']['Flights']['Flight'][0]['Arrival']['AirportCode'] == 'FRA'
 
-
+"""
 ## DST Real Time
 def test_dst_real_time():
     api_key = "12de9152-83be-44ae-a711-958190764930"
@@ -37,3 +37,4 @@ def test_dst_real_time():
 
     # affichage des donnees de tous les vols en temps reel
     assert drt.get_flights(write_json=False)['request']['currency'] == 'EUR'
+"""
