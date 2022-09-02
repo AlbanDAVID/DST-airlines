@@ -1,0 +1,21 @@
+name: Control Push
+on: push
+jobs:
+  qa:
+    name: Check tests
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout on master
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@master
+        with:
+          python-version: "3.x"
+
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v3
+
+      - name: Run tests
+        run: |
+          pytest
