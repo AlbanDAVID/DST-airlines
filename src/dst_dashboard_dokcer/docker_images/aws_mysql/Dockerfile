@@ -12,4 +12,4 @@ ADD static.py /home/aws_test/static.py
 
 WORKDIR /home/aws_test
 
-CMD python3 aws_test.py
+CMD python3 aws_testing.py
