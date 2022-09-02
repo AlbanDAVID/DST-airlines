@@ -2,4 +2,4 @@ pymysql
 pandas
 numpy
 pytest
-json
+
