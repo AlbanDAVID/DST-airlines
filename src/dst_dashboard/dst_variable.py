@@ -1,22 +1,32 @@
+import dash
 from dash import Dash, dcc, html, Input, Output, dash_table, dependencies
 import plotly.express as px
-import dash_bootstrap_components as dbc
 from dash import dcc
 import pandas as pd
-from datetime import date
 import query_data as qd
 from dashboard import app
 from dashboard import dbc
-import plotly.graph_objects as go
 from dash_bootstrap_templates import ThemeChangerAIO, template_from_url
+import datetime
+import plotly.graph_objects as go
 
 header_filter = html.H4(
     "DST Filter", className="bg-primary text-white p-2 mb-2 text-center"
 )
+start_date_picker = dcc.DatePickerSingle(
+    id='start_date',
+    clearable=True,
+    className="dbc",
 
+)
+end_date_picker = dcc.DatePickerSingle(
+    id='end_date',
+    clearable=True,
+    className="dbc",
+)
 iata_dropdown = html.Div(
     [
-        dbc.Label("by Flight IATA"),
+        dbc.Label("Flight IATA"),
         dcc.Dropdown(
             id="flight_iata",
             options=\
@@ -25,7 +35,6 @@ iata_dropdown = html.Div(
                 for flight_iata in qd.df_flights_summary['flight_iata'].unique()
             ],
             clearable=True,
-            multi=True
         ),
     ],
     className="mb-4",
@@ -33,53 +42,33 @@ iata_dropdown = html.Div(
 
 source_airport = html.Div(
     [
-        dbc.Label("Source"),
+        dbc.Label("Departure Airport"),
         dcc.Dropdown(
             id="source",
             options=qd.df_airports['airport_name'],
-            value=qd.df_airports['iata_code'],
             clearable=False,
         ),
+        start_date_picker
     ],
     className="mb-4",
 )
 
 destination_airport = html.Div(
     [
-        dbc.Label("Destination"),
+        dbc.Label("Arrival Airport"),
         dcc.Dropdown(
             id="destination",
             options=qd.df_airports['airport_name'],
-            value=qd.df_airports['iata_code'],
             clearable=False,
         ),
+        end_date_picker
     ],
     className="mb-4",
 )
 
-
-
-datepicker = html.Div(
-    dcc.DatePickerRange(
-        id='start_end',
-        start_date=date(2022, 8, 5),
-        end_date=date(2022, 8, 25),
-        className="mb-2"
-    )
-)
-
-date_range = html.Div(
-    [
-        dbc.Label("Date Range"),
-        datepicker
-    ],
-
-    className="dbc",
-)
-
-data_list = dash_table.DataTable(
-    id='data_list',
-    columns=[{"name": i, "id": i} for i in qd.df_summary_metrics.columns],
+flight_table = dash_table.DataTable(
+    id='flight_table',
+    columns=[{"name": i, "id": i} for i in qd.df_flights_summary.columns],
     data=None,
     row_selectable=False,
     row_deletable=False,
@@ -89,111 +78,138 @@ data_list = dash_table.DataTable(
     page_size=10,
             )
 
+stat_figure = px.pie(qd.df_flights_summary, values=qd.df_flights_summary['status_lufthansa'].value_counts(normalize=True),
+                     names = qd.df_flights_summary['status_lufthansa'].unique(), hole=.1)
+stat = dcc.Graph(id="stat",figure=stat_figure, className='dbc')
 
-tab1 = dbc.Tab([dcc.Graph(id="Live", className='dbc')], label="Live")
-tab3 = dbc.Tab([data_list], label="Table", className="p-4")
-tab2 = dbc.Tab([dcc.Graph(id="Trajectories", className='dbc')], label="Trajectories")
+tab1 = dbc.Tab([dcc.Graph(id="Trajectories", className='dbc')], label="Trajectories")
+tab2 = dbc.Tab([dcc.Graph(id="Live", className='dbc')], label="Live")
 
 
-tabs = dbc.Tabs([tab1, tab2, tab3])
-filter_menu = dbc.Card(
+flight_information_tab = dbc.Tab(
     [
-        dbc.Row(iata_dropdown),
+        dbc.Card([
+            dbc.CardHeader("General information"),
+            dbc.CardBody([
+                dbc.Row(
+                    [
+                        dbc.Col(html.H3(id='flight_icao', style={'color':'#0f1744'}), width='auto'),
+                    ]
+                ),
+                dbc.Row(
+                    [
+                        dbc.Col(html.H3(id='flight_status', style={'color': '#0f1744'}), width='auto'),
+                    ]
+                ),
+
+                dbc.Row([
+                    dbc.Col([
+                        dbc.Row([
+                            dbc.Col(html.Img(id='dep_country_img', style={'width': '100%'}), width=4),
+                        ]),
+                        dbc.Row([
+                            dbc.Col(html.H4(id='dep_airport'), width='auto', style={'color': '#0f1744'}),
+                        ])
+                    ],
+                    width=6),
+
+                    dbc.Col([
+                        dbc.Row([
+                            dbc.Col(html.Img(id='arr_country_img', style={'width': '100%'}), width=4),
+                        ]),
+                        dbc.Row([
+                            dbc.Col(html.H4(id='arr_airport'), width='auto', style={'color': '#0f1744'}),
+                        ])
+                    ],width=6)
+                    ])])
+            ]),
+        dbc.Card([
+            dbc.CardHeader("Departure and Arrival time"),
+            dbc.CardBody(
+                dbc.Row([
+                    dbc.Col([
+                        dbc.Row(
+                            [
+                                dbc.Col(html.Img(src=app.get_asset_url('clock2.png'), style={'width': '70%'}), width=2),
+                                dbc.Col(html.H6("Scheduled :"), width='auto'),
+                                dbc.Col(html.H6(id='dep_time'), width='auto')
+                            ]),
+                        dbc.Row(
+                            [
+                                dbc.Col(html.Img(src=app.get_asset_url('clock2.png'), style={'width': '70%'}), width=2),
+                                dbc.Col(html.H6("Actual :"), width='auto'),
+                                dbc.Col(html.H6(id='dep_time_real'), width='auto')
+                            ]),
+                    ],
+                        width=6),
+                    dbc.Col([
+                        dbc.Row(
+                            [
+                                dbc.Col(html.Img(src=app.get_asset_url('clock2.png'), style={'width': '70%'}), width=2),
+                                dbc.Col(html.H6("Scheduled :"), width='auto'),
+                                dbc.Col(html.H6(id='arr_time'), width='auto')
+                           ]),
+                        dbc.Row(
+                            [
+                                dbc.Col(html.Img(src=app.get_asset_url('clock2.png'), style={'width': '70%'}), width=2),
+                                dbc.Col(html.H6("Actual :"), width='auto'),
+                                dbc.Col(html.H6(id='arr_time_real'), width='auto')
+                            ]),
+
+                    ],
+                        width=6),
+                ]))
+        ]),
+
+        dbc.Card([
+            dbc.CardHeader("Flight Metrics"),
+            dbc.CardBody([
+                dbc.Row([
+                    dbc.Col(html.H6('Speed = ', style={'color': '#0f1744'}), width ='auto'),
+                    dbc.Col(html.H6(id='speed', style={'color': '#0f1744'}), width='auto'),
+                    dbc.Col(html.H6('km/h', style={'color': '#0f1744'}), width='auto'),
+                ]),
+                dbc.Row([
+                    dbc.Col(html.H6('Direction = ', style={'color': '#0f1744'}), width='auto'),
+                    dbc.Col(html.H6(id='direction', style={'color': '#0f1744'}), width='auto'),
+                    dbc.Col(html.H6('°', style={'color': '#0f1744'}), width='auto'),
+                ]),
+                dbc.Row([
+                    dbc.Col(html.H6('Altitude = ', style={'color': '#0f1744'}), width='auto'),
+                    dbc.Col(html.H6(id='altitude', style={'color': '#0f1744'}), width='auto'),
+                    dbc.Col(html.H6('m', style={'color': '#0f1744'}), width='auto'),
+                ]),
+                dbc.Row(dcc.Graph(id="position", className='dbc'))
+
+
+            ])
+        ])
+
+    ],
+    label="Flight"
+)
+
+tabs = dbc.Tabs([flight_information_tab, tab2])
+filter_menu = html.Div (
+    [
+        dbc.Row(
+            [
+                dbc.Col(html.Img(src=app.get_asset_url("takeoff.png"), style={'width': '10%'}), width=6),
+                dbc.Col(html.Img(src=app.get_asset_url("landing.png"), style={'width': '10%'}), width=6),
+            ]
+        ),
         dbc.Row(
             [
                 dbc.Col(source_airport),
                 dbc.Col(destination_airport),
             ]),
-
+        dbc.Row(iata_dropdown),
+        dbc.Row(flight_table),
         dbc.Row(tabs),
-        # dbc.Row(datepicker),
+
     ],
-    body=True,
+    className='dbc'
 )
-
-
-@app.callback(
-    dependencies.Output('source', 'value'),
-    dependencies.Output('destination', 'value'),
-    dependencies.Input('flight_iata', 'value')
-)
-def update_source_and_destination_drop_downs(flight_iata):
-    if flight_iata is None or len(flight_iata) > 1:
-        return None,None
-    dep = qd.df_flights_summary[qd.df_flights_summary['flight_iata'] == flight_iata[0]]['dep_iata'].iloc[0]
-    arr = qd.df_flights_summary[qd.df_flights_summary['flight_iata'] == flight_iata[0]]['arr_iata'].iloc[0]
-    dep = qd.df_airports[qd.df_airports['iata_code'] == dep]['airport_name'].iloc[0]
-    arr = qd.df_airports[qd.df_airports['iata_code'] == arr]['airport_name'].iloc[0]
-    return arr, dep
-
-@app.callback(
-
-    dependencies.Output("data_list", "data"),
-    dependencies.Output("Trajectories", "figure"),
-    dependencies.Input('flight_iata', 'value'),
-    Input(ThemeChangerAIO.ids.radio("theme"), "value"),
-)
-def tabs_update(flight_iatas, theme):
-    df = qd.df_summary_metrics.set_index(qd.df_summary_metrics['flight_iata']).loc[flight_iatas].drop_duplicates(subset=['flight_iata'])
-    df_sma = qd.df_summary_metrics_airports.drop_duplicates(subset='flight_iata')
-
-    fig = go.Figure(data=go.Scattergeo(
-        mode='lines',
-        line=dict(width=2, color='blue'),
-    ))
-    for i in flight_iatas:
-        dep_lng = df_sma[df_sma['flight_iata'] == i]['dep_airport_lng'].iloc[0]
-        dep_lat = df_sma[df_sma['flight_iata'] == i]['dep_airport_lat'].iloc[0]
-        arr_lng = df_sma[df_sma['flight_iata'] == i]['arr_airport_lng'].iloc[0]
-        arr_lat = df_sma[df_sma['flight_iata'] == i]['arr_airport_lat'].iloc[0]
-        dep_airport_name = df_sma[df_sma['flight_iata'] == i]['dep_airport_name'].iloc[0]
-        arr_airport_name = df_sma[df_sma['flight_iata'] == i]['arr_airport_name'].iloc[0]
-
-        fig.add_trace(
-            go.Scattergeo(
-                locationmode='USA-states',
-                lon=[dep_lng, arr_lng],
-                lat=[dep_lat, arr_lat],
-                mode='lines+markers',
-                marker=dict(size=10, opacity=1, symbol='circle-dot'),
-                name=i,
-                hovertext = [dep_airport_name, arr_airport_name],
-            )
-        )
-    #fig = go.Figure(go.Scattergeo())
-    fig.update_layout(
-        title_text='Contour lines over globe<br>(Click and drag to rotate)',
-        showlegend=True,
-        geo=dict(
-            showland=True,
-            showcountries=True,
-            showocean=True,
-            countrywidth=0.5,
-            landcolor='rgb(230, 145, 56)',
-            lakecolor='rgb(0, 255, 255)',
-            oceancolor='rgb(0, 255, 255)',
-            projection=dict(
-                type='orthographic',
-                rotation=dict(
-                    lon=-100,
-                    lat=40,
-                    roll=0
-                )
-            ),
-            lonaxis=dict(
-                showgrid=True,
-                gridcolor='rgb(102, 102, 102)',
-                gridwidth=0.5
-            ),
-            lataxis=dict(
-                showgrid=True,
-                gridcolor='rgb(102, 102, 102)',
-                gridwidth=0.5
-            ),
-        )
-    )
-
-    return df.to_dict('records'), fig
 
 @app.callback(
     Output('Live', 'figure'),
@@ -214,3 +230,182 @@ def live_update(theme):
 
     live_fig.update_layout(mapbox_style="carto-positron")
     return live_fig
+
+@app.callback(
+    Output('flight_table', 'data'),
+    Output('source', 'value'),
+    Output('destination', 'value'),
+    Output('flight_iata', 'value'),
+    Output('dep_country_img', 'src'),
+    Output('arr_country_img', 'src'),
+    Output('dep_airport', 'children'),
+    Output('arr_airport', 'children'),
+    Output('dep_time', 'children'),
+    Output('arr_time', 'children'),
+    Output('dep_time_real', 'children'),
+    Output('arr_time_real', 'children'),
+    Output('flight_icao', 'children'),
+    Output('flight_status', 'children'),
+    Output('direction', 'children'),
+    Output('speed', 'children'),
+    Output('altitude', 'children'),
+    Output('position', 'figure'),
+    Input('start_date', 'date'),
+    Input('end_date', 'date'),
+    Input('source', 'value'),
+    Input('destination', 'value'),
+    Input('flight_iata', 'value'),
+)
+def update_flight_filter_list(start_date, end_date, src, dst, flight_iata):
+    res_src=src
+    res_dst=dst
+    res_iata=flight_iata
+    df = qd.df_flights_summary
+    ctx = dash.callback_context
+    trigger_id = ctx.triggered[0]["prop_id"].split(".")[0]
+    if trigger_id == 'source':
+        src_iata=qd.df_airports[qd.df_airports['airport_name'] == src]['iata_code'].iloc[0]
+        df = df[df['dep_iata'] == src_iata]
+        if dst is not None:
+            dst_iata=qd.df_airports[qd.df_airports['airport_name'] == dst]['iata_code'].iloc[0]
+            df = df[df['arr_iata'] == dst_iata]
+        res_iata = df['flight_iata'].iloc[0]
+        if res_iata is None:
+            res_iata=flight_iata
+        res_dst = dst
+        res_src = src
+    if trigger_id =='destination' :
+        dst_iata = qd.df_airports[qd.df_airports['airport_name'] == dst]['iata_code'].iloc[0]
+        df = df[df['arr_iata'] == dst_iata]
+        if src is not None:
+            src_iata = qd.df_airports[qd.df_airports['airport_name'] == src]['iata_code'].iloc[0]
+            df = df[df['dep_iata'] == src_iata]
+        res_iata = df['flight_iata'].iloc[0]
+        if res_iata is None:
+            res_iata=flight_iata
+        res_dst = dst
+        res_src = src
+    elif trigger_id == 'flight_iata':
+        df = df[df['flight_iata'] == flight_iata]
+        src_iata = df['dep_iata'].iloc[0]
+        dst_iata = df['arr_iata'].iloc[0]
+        res_src = qd.df_airports[qd.df_airports['iata_code'] == src_iata]['airport_name'].iloc[0]
+        res_dst = qd.df_airports[qd.df_airports['iata_code'] == dst_iata]['airport_name'].iloc[0]
+        res_iata = flight_iata
+    if start_date is not None:
+        df = df[df['schedule_date_deps'] == start_date]
+        print (df)
+    if end_date is not None:
+        df = df[df['schedule_date_arrs'] == end_date]
+
+    src_img="countries/" + qd.df_airports[qd.df_airports['iata_code'] == src_iata]['country_code'].iloc[0].lower()+".png"
+    dst_img="countries/" + qd.df_airports[qd.df_airports['iata_code'] == dst_iata]['country_code'].iloc[0].lower()+".png"
+
+    dep_time= (datetime.datetime.min + df['schedule_time_deps'].iloc[0]).time()
+    arr_time= (datetime.datetime.min + df['schedule_time_arrs'].iloc[0]).time()
+
+    dep_time_real = (datetime.datetime.min + df['actual_time_deps'].iloc[0]).time()
+    arr_time_real = (datetime.datetime.min + df['actual_time_arrs'].iloc[0]).time()
+    flight_icao = df[df['flight_iata'] == res_iata]['flight_icao'].iloc[0]
+    flight_status = df[df['flight_iata'] == res_iata]['status_lufthansa'].iloc[0]
+    flight_direction = qd.df_flights_metrics[qd.df_flights_metrics['flight_iata'] == res_iata]['dir'].iloc[0]
+    flight_speed = qd.df_flights_metrics[qd.df_flights_metrics['flight_iata'] == res_iata]['speed'].iloc[0]
+    flight_altitude = qd.df_flights_metrics[qd.df_flights_metrics['flight_iata'] == res_iata]['alt'].iloc[0]
+
+    ## Code for fight direction
+    # fig = go.Figure(go.Barpolar(
+    #     r=[100],
+    #     theta=[flight_direction]
+    #     width=[20],
+    #     marker_color=["#E4FF87"],
+    #     marker_line_color="black",
+    #     marker_line_width=2,
+    #     opacity=0.8
+    # ))
+    #
+    # fig.update_layout(
+    #     template=None,
+    #     polar=dict(
+    #         radialaxis=dict(range=[0, 5], showticklabels=False, ticks=''),
+    #         angularaxis=dict(showticklabels=False, ticks='')
+    #     )
+    # )
+
+    dff=qd.df_summary_metrics_airports[qd.df_summary_metrics_airports['flight_iata'] == res_iata]
+    dep_airport_lon= dff['dep_airport_lng'].iloc[0]
+    dep_airport_lat= dff['dep_airport_lat'].iloc[0]
+
+    arr_airport_lon = dff['arr_airport_lng'].iloc[0]
+    arr_airport_lat = dff['arr_airport_lat'].iloc[0]
+
+    lon = dff['lng'].iloc[0]
+    lat = dff['lat'].iloc[0]
+
+    fig = go.Figure(data=go.Scattergeo(
+        mode='lines',
+        line=dict(width=2, color='blue'),
+    ))
+
+    fig.add_trace(
+        go.Scattergeo(
+            locationmode='USA-states',
+            lon=[dep_airport_lon, arr_airport_lon],
+            lat=[dep_airport_lat, arr_airport_lat],
+            mode='lines+markers',
+            marker=dict(size=12, opacity=0.5, symbol='diamond'),
+            hovertext = [res_src, res_dst],
+            name=''
+        )
+    )
+    fig.add_trace(
+        go.Scattergeo(
+            lon=[lon],
+            lat=[lat],
+            mode='markers',
+            hovertext=res_iata,
+            marker=dict(size=12, opacity=1, symbol='triangle-up'),
+            name=''
+        )
+    )
+    fig.update_layout(
+        showlegend=False,
+        hovermode='closest',
+        geo=dict(
+            showcountries=True, countrycolor="RebeccaPurple",
+            showcoastlines=True, coastlinecolor="RebeccaPurple",
+            showland=True, landcolor="LightGray",
+            showocean=True,oceancolor="LightBlue",
+            projection_scale=2,  # this is kind of like zoom
+            center=dict(lat=lat, lon=lon),  # this will center on the point
+            countrywidth=0.5,
+            projection=dict(
+                rotation=dict(
+                    lon=lon,
+                    lat=lat,
+                    roll=0
+                )
+            ),
+            lonaxis=dict(
+                showgrid=True,
+                gridcolor='rgb(102, 102, 102)',
+                gridwidth=0.5
+            ),
+            lataxis=dict(
+                showgrid=True,
+                gridcolor='rgb(102, 102, 102)',
+                gridwidth=0.5
+            ),
+        )
+    )
+
+
+
+    return df.to_dict('records'), res_src, res_dst, res_iata, app.get_asset_url(src_img),\
+           app.get_asset_url(dst_img), res_src, res_dst, dep_time, arr_time, dep_time_real,\
+           arr_time_real, flight_icao, flight_status, flight_direction, flight_speed, flight_altitude, fig
+
+
+def update_pie_chart():
+    df = qd.df_summary_metrics_airports
+    fig = px.pie(df, values='status_lufthansa', names='status_lufthansa' , hole=.3)
+    return fig

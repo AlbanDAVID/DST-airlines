@@ -12,7 +12,6 @@ import LufthansaVariable
 import AirlabsStatic
 import AirlabsVariable
 import DstRealtime
-
 import requests
 
 
@@ -27,6 +26,8 @@ header = auth.get_header()
 #print(header)
 # Instanciation de la classe RequestFactory du module dst_utils
 rf = lu.RequestFactory(header)
+
+
 
 ## donnees statiques 
 # Instanciation de la classe DstStatic du module dst_extract
@@ -47,7 +48,7 @@ dd.get_cities_data_luf(write_json=True)
 ddv = LufthansaVariable.LufthansaVariable(rf)
 
 #affichage des donnees du vol en provenance de New York et a destination de France en date du 27/07/2022
-ddv.pprint(ddv.get_flight_route("JFK", "FRA",  "2022-08-01"))
+ddv.pprint(ddv.get_flight_route("JFK", "FRA",  "2022-08-29"))
 
 #Sauvegarder dans un fichier json 
 ddv.get_flight_route("JFK", "FRA",  "2022-08-01", write_json = True)
@@ -62,10 +63,10 @@ ddv.pprint(ddv.get_flights(write_json=True,startDate="01JUL22",endDate="29JUL22"
 api_key = "12de9152-83be-44ae-a711-958190764930"
 
 # Instanciation de la classe DstRealTime du module dst_extract
-drt = de.DstRealTime(api_key)
+drt = DstRealtime.DstRealTime(api_key)
 
 # affichage des donnees de tous les vols en temps reel
-drt.get_flights(write_json=True)
+print(drt.get_flights(write_json=False))
 
 # affichage des delays de tous les vols concernés par un retard
 drt.get_delays('40', 'departures', 'LH', False)
