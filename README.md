@@ -1,4 +1,4 @@
-# DST-airlines
+# DST-airline
 
 Les consignes projet ci-dessous:
 
