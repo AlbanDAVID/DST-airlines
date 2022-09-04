@@ -58,7 +58,7 @@ There is our sql shema modelization :
 
 ## IV - Flight tracker app
 ### a. Creating the app with dash and plotly
-Detailed information can be found [here](https://github.com/AlbanDAVID/DST-airlines/blob/main_documentation_alban/src/dst_dashboard/README.md)
+Detailed information can be found [here](src/dst_dashboard/README.md)
 
 ### b. Runing the app with docker
 Detailed information can be found [here](src/dst_dashboard_dokcer/README.md)
