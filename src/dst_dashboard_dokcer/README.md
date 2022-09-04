@@ -37,4 +37,4 @@ to acced to the dashboard, you have to connect to the adress at the address prov
 All login credentials are to be filled in the static.py file
 
 ## V - More information about the dashboard
-For more complete information about the dashboard, click [here](https://github.com/AlbanDAVID/DST-airlines/blob/main/src/dst_dashboard/README.md)
+For more complete information about the dashboard, click [here](dst_dashboard/README.md)
