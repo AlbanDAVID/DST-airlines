@@ -89,7 +89,7 @@ To see the file in detail, [click here](src/dst_sql/)
 ### b. CI/CD
 All our unit tests described above are launched at each push. For this, we have created a git hub action which launches all the pytest files.
 
-click [here] to see the github action file(.github/workflows/)
+The github action file is [here](.github/workflows/)
 
 
 ## VI - Improvement / to do
