@@ -40,9 +40,9 @@ As we can see on this schema, there are several steps :
 1) Collecting data with Airlibas and Lufthansa API
 2) All of these raw data are stored in a amazon cloud bucket (S3)
 - Why ? It'ss like a datalake and allow us to keep our raw data in a common place.
-3) After, these data are transferred to a nosql mongodb database
+3) After, these data are transferred to a nosql mongodb database (stored on a cloud platform)
 - Why ? The raw data are in a json format. It's an easily usable format on mongo db. Once the data are on mongo db, we can easily transform them into a pandas dataframe to clean our data.
-4) Once data are cleaned, we inject them into an sql database.
+4) Once data are cleaned, we inject them into an sql database (cloud mysql with aws rds)
 - Why ? Regular update of real times flight informations are like transactions. We needed constraints and a strict schema. This allows that the final informations on the dashboard are always consistent. Futhermore, the SQL modelisation were challenging and led us to understand deeply the data and what we want to do with it in the end use.
 5) We use an API to display our data (Dash and plotly)
 
