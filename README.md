@@ -46,6 +46,8 @@ As we can see on this schema, there are several steps :
 - Why ? Regular update of real times flight informations are like transactions. We needed constraints and a strict schema. This allows that the final informations on the dashboard are always consistent. Futhermore, the SQL modelisation were challenging and led us to understand deeply the data and what we want to do with it in the end use.
 5) We use an API to display our data (Dash and plotly)
 
+Note : All the data are stored on the cloud.
+
 ### b. SQL modelization
 There is our sql shema modelization :
 
