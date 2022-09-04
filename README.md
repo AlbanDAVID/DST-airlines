@@ -1,31 +1,90 @@
-# DST-airlines
+# Lufthansa Flight Tracker 
 
-Les consignes projet ci-dessous:
+### Context
+Creation of a flight tracker as part of the datascientest training project (dataengineer bootcamp training by datascientest, june 2022)
+Team : Houda EL-MMI, Yacine AMESROUY & Alban DAVID
 
-* [X] **Étape 0/ Cadrage (Notre première réunion) : Échéance Vendredi 08 Juillet**
+## Summary
+#### I - Flight tracker app overview
+#### II - Data and API
+#### III - Data organization
+##### a. General organization and justification
+##### b. SQL modelization
+##### c. data cleaning
+#### IV - Flight tracker app
+##### a. Creating the app with dash and plotly
+##### b. Runing the app with docker
+##### c. Unit testing
+#### V - Automatisation and CI/CD
+##### a. Airflow
+##### b. CI/CD
+#### VI - Improvement / to do
 
-  * Introduction de chaque membre de l'équipe
-  * Explication du cadre du projet (les différentes étapes)
 
-* [X] **Étape 1 / Découverte des sources de données disponible : `Échéance Vendredi 15 Juillet`**
+## I - Flight tracker app overview
 
-  * Définir le contexte et le périmètre du projet (ne sous-estimez pas cette étape).
-  * Prise en main des différentes sources de données(explorer les API fournis mais qui vous sont disponibles, les pages webs dont vous allez appliquer le webscraping (il faudra observer leur structure))
+![Alt Text](readme_assests/app.gif)
 
-  **Livrable attendu:** La tâche est relativement simple, vous devrez fournir un rapport expliquant les différentes sources de données accompagné des exemples de données collectées
+## II - Data and API
+We collected our data with two API:
+- Lufthansa API
+- Airlabs API
+# ARGUMENTER POURQUOI ON A PRIS DEUX API ET RESUMER LES DONEES RECOLTEES (airports, + le fait qu'il y ait statique et temps réel etc.) YACINE ?
+
+## III - Data organization
+### a. General organization
+
+![Alt Text](readme_assests/general_orga.png)
+
+As we can see on this schema, there are several steps :
+1) Collecting data with Airlibas and Lufthansa API
+2) All of these raw data are stored in a amazon cloud bucket (S3)
+- Why ? It'ss like a datalake and allow us to keep our raw data in a common place.
+3) After, these data are transferred to a nosql mongodb database
+- Why ? The raw data are in a json format. It's an easily usable format on mongo db. Once the data are on mongo db, we can easily transform them into a pandas dataframe to clean our data.
+4) Once data are cleaned, we inject them into an sql database.
+- Why ? Regular update of real times flight informations are like transactions. We needed constraints and a strict schema. This allows that the final informations on the dashboard are always consistent. Futhermore, the SQL modelisation were challenging and led us to understand deeply the data and what we want to do with it in the end use.
+5) We use an API to display our data (Dash and plotly)
+
+### b. SQL modelization
+There is our sql shema modelization :
+
+![Alt Text](readme_assests/sql_modelisation.png)
 
 
+### c. data cleaning
+# EXPLIQUER LE NETTOYAGE DES DONNEES + MISE EN GARDE : Data not available yet et heure 01:01 lorsque c'est le cas. Yacine ?
 
-* [ ] **Étape 2/ Organisation des données : `Échéance Vendredi 29 Juillet`**
-    Il s'agira de la partie la plus importante de votre projet où vous ferez le coeur du métier de Data Engineer.
-    On vous demande d'organiser les données via différentes bases de données :
 
-  * Relationnelle
-  * NoSQL
+## IV - Flight tracker app
+### a. Creating the app with dash and plotly
+Detailed information can be found here #METTRE LIEN DU README Houda
 
-  Il faudra penser à l'architecture des données, notamment comment relier les différentes données entre elles.
-  Livrable :
+### b. Runing the app with docker
+Detailed information can be found here #METTRE LIEN du readme sur docker
 
-  * Tout document expliquant l'architecture choisie (Diagramme UML)
-  * Fichier implémentant les bases de données
-  * Fichier de requête
+### c. Unit testing
+We did unit testing through all of our steps:
+
+1) API
+# HOUDA
+
+2) S3 + MONGO DB + CLEAN DATA
+# YACINE
+
+3) SQL AND DASHBOARD 
+
+Two tests are executed before the execution of the dash:
+- Verify if the connection to the databse (mysql in aws) works fine (password, username and database's name are correct)
+- Verify that fetching data to this database works fine
+
+
+## V - Automatisation and CI/CD
+### a. Airflow
+# TODO
+
+### b. CI/CD
+All our unit tests described above are launched at each push. For this, we have created a git hub action which launches all the pytest files.
+
+## VI - Improvement / to do
+- Deploy the app in production 
