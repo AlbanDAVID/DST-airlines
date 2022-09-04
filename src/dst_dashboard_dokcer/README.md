@@ -13,6 +13,7 @@ Through this readme, we will see :
 #### II - Tests before runing the dash
 #### III - Acced to the dashboard
 #### IV - How to connect to the database with static.py
+#### V - More information about the dashboard
 
 ## I - Usage
 
@@ -34,3 +35,6 @@ to acced to the dashboard, you have to connect to the adress at the address prov
 
 ## IV - How to connect to the database with static.py
 All login credentials are to be filled in the static.py file
+
+## V - More information about the dashboard
+For more complete information about the dashboard, click [here](DST-airlines/src/dst_dashboard/README.md)
