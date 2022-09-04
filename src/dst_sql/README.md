@@ -11,8 +11,8 @@ This folder contain :
 
 4) function_test.py
 - Functions to allows unit testing 
-a. test the connection to the database
-b. test data fetching from mysql databse 
+- a. test the connection to the database
+- b. test data fetching from mysql databse 
 
 5) test_pytest.py
 - Run the unit test above with pytest (this pytest file is automatically run after a push with github actions)
