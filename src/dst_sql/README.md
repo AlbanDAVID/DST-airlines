@@ -10,7 +10,7 @@ This folder contain :
 - Allows to queries our mysql database stored in aws rds
 
 4) function_test.py
-- Functions to allows unit testing 
+- Functions to allows unit testing :
 - a. test the connection to the database
 - b. test data fetching from mysql databse 
 
