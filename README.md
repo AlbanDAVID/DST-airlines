@@ -80,6 +80,7 @@ Two tests are executed before the execution of the dash:
 - Verify if the connection to the databse (mysql in aws) works fine (password, username and database's name are correct)
 - Verify that fetching data to this database works fine
 
+To see the file in detail, [click here](src/dst_sql/)
 
 ## V - Automatisation and CI/CD
 ### a. Airflow
