@@ -1,6 +1,3 @@
-# DST Dashboard
-
-
 ## Summary
 #### I - Airflow dag presentation
 #### II - How to run airflow
