@@ -6,9 +6,9 @@
 #### II - How to run airflow
 
 ## I - Airflow dag
-There is our graph airflow dag
+There is our graph airflow dag : 
 
-
+![Alt Text](readme_assests/airflow_dag_graph.png)
 
 - 1. my_sql_table_check : check the connection to mysql database and create tables if they not exists
 - 2. s3_cnx_check : check connection to s3 datalake
