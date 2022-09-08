@@ -1,6 +1,7 @@
 ## Summary
 #### I - Airflow dag presentation
 #### II - How to run airflow
+#### III - Libraries (warning)
 
 ## I - Airflow dag
 There is our graph airflow dag : 
@@ -23,3 +24,6 @@ docker-compose up
 
 And go to http://0.0.0.0:8080 to acced the airflow dashboard. The name of the dag is : dst-airlines-dag
 
+## III - Libraries (warning)
+The necessary libraries are included (as pymysql) in the docker-compose.yaml.
+Therefore, each new library included in the dag.py must be installed via the docker-compose.yaml 
