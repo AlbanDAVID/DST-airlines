@@ -15,6 +15,8 @@ There is our graph airflow dag :
 - 5. airlabs_apo_check_status : check the airlabs api status
 - 6. inject_data : fetch data from api's, cleaning data processing and inject data into mysql database
 
+Note : All these steps are runned whether the previous tasks were successful
+
 ## II - How to run airflow
 
 Run the following command line :
