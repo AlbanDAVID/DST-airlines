@@ -19,7 +19,9 @@ def lufthansa_api_check_status():
 
     response = requests.get('https://api.lufthansa.com/v1/mds-references/aircraft', headers=headers)
 
-
-    print(response)
+    if str(response) == '<Response [200]>':
+        print('Succes connection to Lufthansa API : {response}'.format(response = response))
+    elif str(response) != '<Response [200]>':
+        raise Exception('Error : {response}'. format(response = response))
 
 lufthansa_api_check_status()

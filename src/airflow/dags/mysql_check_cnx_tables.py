@@ -9,7 +9,7 @@ import static
 
 # function to check if connexion to bdd is ok and id tables are created (if not, create them)
 
-def mysql_tables_check():
+def mysql_cnx_and_tables_check():
 
     # connexion à la BDD
 
@@ -194,4 +194,4 @@ def mysql_tables_check():
     else:
         print('tables already created and connection to mysql ok')
 
-mysql_tables_check()
+mysql_cnx_and_tables_check()

@@ -14,7 +14,9 @@ def airlabs_api_check_status():
     api_base = 'http://airlabs.co/api/v9/'
     api_result = requests.get(api_base+method, params)
   
-    print(api_result)
-
+    if str(api_result) == '<Response [200]>':
+        print('Succes connection to airlabs API : {api_result}'.format(api_result = api_result))
+    elif str(api_result) != '<Response [200]>':
+        raise Exception('Error : {api_result}'. format(api_result = api_result))
 
 airlabs_api_check_status()
