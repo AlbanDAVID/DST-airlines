@@ -192,6 +192,6 @@ def mysql_cnx_and_tables_check():
         print('table created and connection to mysql ok')
 
     else:
-        print('tables already created and connection to mysql ok')
+        print('tables already created and connection to mysql successful')
 
 mysql_cnx_and_tables_check()

@@ -12,6 +12,11 @@ import static
 from mysql_check_cnx_tables import mysql_cnx_and_tables_check
 from lufthansa_api_check_status import lufthansa_api_check_status
 from airlabs_api_check_status import airlabs_api_check_status
+from transform_and_inject_data import transform_and_inject_data
+from s3_cnx_check import aws_S3_connection_test
+from mongodb_cnx_check import mongodb_connection_test
+
+
 from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow import DAG
@@ -47,24 +52,18 @@ lufthansa_api_check_status = PythonOperator(
 )
 
 # test connection s3 datalake
-def s3_cnx_check():
-    print('successful connection to s3')
 
 s3_cnx_check = PythonOperator(
     task_id='s3_cnx_check',
-    python_callable=s3_cnx_check,
+    python_callable=aws_S3_connection_test,
     dag=my_dag,
     trigger_rule='all_success'
 )
-
-# test connection mongodb
-def mongodb_cnx_check():
-    print('successful connection to mongodb')
    
-
+# test connection mongodb
 mongodb_cnx_check = PythonOperator(
     task_id='mongodb_cnx_check',
-    python_callable=mongodb_cnx_check,
+    python_callable=mongodb_connection_test,
     dag=my_dag,
     trigger_rule='all_success'
 )
@@ -77,11 +76,8 @@ mysql_cnx_and_tables_check = PythonOperator(
     trigger_rule='all_success'
 )
 
-
-# inject_data
-def transform_and_inject_data():
-    print('successful data injection')
-
+"""
+# transform_and_inject_data
 
 transform_and_inject_data = PythonOperator(
     task_id='transform_and_inject_data',
@@ -89,6 +85,6 @@ transform_and_inject_data = PythonOperator(
     dag=my_dag,
     trigger_rule='all_success'
 )
+"""
 
-
-airlabs_api_check_status >> lufthansa_api_check_status >> s3_cnx_check >> mongodb_cnx_check >> mysql_cnx_and_tables_check >> transform_and_inject_data
+airlabs_api_check_status >> lufthansa_api_check_status >> s3_cnx_check >> mongodb_cnx_check >> mysql_cnx_and_tables_check
