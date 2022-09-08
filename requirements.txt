@@ -3,3 +3,7 @@ pandas
 numpy
 pytest
 requests
+botocore
+boto3
+certifi
+pymongo
