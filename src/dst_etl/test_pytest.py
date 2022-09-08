@@ -32,12 +32,10 @@ def mongodb_connection_test():
 print(mongodb_connection_test())
 print(aws_S3_connection_test())
 
-def aws_S3_connection_test2():
+def test_aws_S3_connection_test2():
     assert aws_S3_connection_test() == "Successful connection"
 
 
-def mongodb_connection_test2():
+def test_mongodb_connection_test2():
     assert mongodb_connection_test() == 'Successful connection'
-    
-aws_S3_connection_test2()
-mongodb_connection_test2()
+  
