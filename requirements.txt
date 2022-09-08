@@ -6,4 +6,4 @@ requests
 botocore
 boto3
 certifi
-pymongo
+pymongo[srv]
