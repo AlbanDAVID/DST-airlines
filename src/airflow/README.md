@@ -8,12 +8,12 @@ There is our graph airflow dag :
 
 ![Alt Text](readme_assests/airflow_dag_graphv2.png)
 
-- 1. my_sql_table_check : check the connection to mysql database and create tables if they not exists
-- 2. s3_cnx_check : check connection to s3 datalake
-- 3. mongodb_cnx_check : check connection to mongodb
-- 4. lufthansa_api_check_status : check the lufthansa api status
-- 5. airlabs_apo_check_status : check the airlabs api status
-- 6. inject_data : fetch data from api's, cleaning data processing and inject data into mysql database
+- 1. airlabs_api_check_status : check the airlabs api status
+- 2. lufthansa_api_check_status : check the lufthansa api status
+- 3. s3_cnx_check : check connection to s3 datalake
+- 4. mongodb_cnx_check : check connection to mongodb
+- 5. my_sql_cnx_and_tables_check : check the connection to mysql database and create tables if they not exists
+- 6. transform_and_inject_data : fetch data from api's, cleaning data processing and inject data into mysql database
 
 Note : All these steps are runned whether the previous tasks were successful
 
