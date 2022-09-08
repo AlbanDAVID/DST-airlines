@@ -84,7 +84,9 @@ To see the file in detail, [click here](src/dst_sql/)
 
 ## V - Automatisation and CI/CD
 ### a. Airflow
-# TODO
+
+A complete documentation of our airflow is available [here](src/airflow/)
+
 
 ### b. CI/CD
 All our unit tests described above are launched at each push. For this, we have created a git hub action which launches all the pytest files.
