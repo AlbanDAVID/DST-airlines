@@ -7,12 +7,12 @@ from pymysql import OperationalError
 import pandas as pd
 import numpy as np
 import os
-from datetime import datetime
+import datetime as dt
 import static
 from mysql_check_cnx_tables import mysql_cnx_and_tables_check
 from lufthansa_api_check_status import lufthansa_api_check_status
 from airlabs_api_check_status import airlabs_api_check_status
-from transform_and_inject_data import transform_and_inject_data
+from transform_and_inject_data import launch_etl
 from s3_cnx_check import aws_S3_connection_test
 from mongodb_cnx_check import mongodb_connection_test
 
@@ -24,13 +24,14 @@ from airflow.utils.dates import days_ago
 from airflow.operators.python import PythonOperator
 from airflow.operators.python import BranchPythonOperator
 
+
 my_dag = DAG(
     dag_id='dst-airlines-dag',
     tags=['dst-airlines', 'datascientest'],
     schedule_interval=None,
     default_args={
         'owner': 'airflow',
-        'start_date': days_ago(0, minute=1),
+        'start_date': dt.datetime.today() 
     }
 )
 
@@ -76,15 +77,15 @@ mysql_cnx_and_tables_check = PythonOperator(
     trigger_rule='all_success'
 )
 
-"""
+
 # transform_and_inject_data
 
 transform_and_inject_data = PythonOperator(
     task_id='transform_and_inject_data',
-    python_callable=transform_and_inject_data,
+    python_callable=launch_etl,
     dag=my_dag,
     trigger_rule='all_success'
 )
-"""
 
-airlabs_api_check_status >> lufthansa_api_check_status >> s3_cnx_check >> mongodb_cnx_check >> mysql_cnx_and_tables_check
+
+airlabs_api_check_status >> lufthansa_api_check_status >> s3_cnx_check >> mongodb_cnx_check >> mysql_cnx_and_tables_check >> transform_and_inject_data

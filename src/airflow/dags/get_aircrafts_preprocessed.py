@@ -21,5 +21,3 @@ def get_aircrafts_preprocessed():
     except:
         pass
     
-df = get_aircrafts_preprocessed()
-print(df)

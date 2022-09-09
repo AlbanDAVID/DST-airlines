@@ -72,7 +72,7 @@ def get_missing_airports(api_flights_df):
             col_airports = db['airports']
             col_airports.delete_many({})
             col_airports.insert_many(data_airports)
-            return api_airports
+    return list_missing_air
     
 
         
@@ -113,4 +113,4 @@ def get_missing_aircraft(api_flights_df):
             col_fleets.delete_many({})
             col_fleets.insert_many(data_fleets)
             
-            return api_fleets_response
+        return api_fleets_response
