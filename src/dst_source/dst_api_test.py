@@ -35,4 +35,4 @@ def test_dst_real_time():
     drt = dr.DstRealTime(api_key)
 
     # affichage des donnees de tous les vols en temps reel
-    assert drt.get_flights(write_json=False)['request']['currency'] == 'EUR'
+    assert drt.get_flights(write_json=False)['request']['currency'] == 'USD'
