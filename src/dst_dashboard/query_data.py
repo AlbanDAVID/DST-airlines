@@ -32,9 +32,11 @@ cursor.execute(query_airports)
 df_airports = pd.DataFrame(cursor.fetchall(), columns = ['iata_code','icao_code' ,'airport_name','country_code','airport_lat','airport_lng'])
 cursor.execute(query_flights_metrics)
 df_flights_metrics= pd.DataFrame(cursor.fetchall(), columns = ['id','hex','flight_icao','flight_iata','lat' ,'lng','alt','dir','speed' ,'v_speed','date_retrieve','time_retrieve'])
+df_flights_metrics=df_flights_metrics.iloc[::-1]
 cursor.execute(query_flights_summary)
 df_flights_summary= pd.DataFrame(cursor.fetchall(), columns = ['id' , 'hex' ,'flight_icao' ,'flight_iata' ,'status_lufthansa' ,'flag' ,'dep_iata' ,'arr_iata' ,'schedule_date_deps' ,'schedule_date_arrs' ,'schedule_time_deps' ,'schedule_time_arrs','actual_date_deps' ,'actual_date_arrs','actual_time_deps' ,'actual_time_arrs' ,'date_retrieve' ,'time_retrieve' ,'terminal_names_dep' ,'terminal_names_arr' ,'gates_dep' ,'gates_arr'])
 
+df_flights_summary=df_flights_summary.iloc[::-1]
 # replace value '1900-01-01' by 'not available yet'
 df_flights_summary['schedule_date_deps'] = df_flights_summary['schedule_date_deps'].astype('string').replace(['1900-01-01'],'Not available yet')
 df_flights_summary['schedule_date_arrs'] = df_flights_summary['schedule_date_arrs'].astype('string').replace(['1900-01-01'],'Not available yet')

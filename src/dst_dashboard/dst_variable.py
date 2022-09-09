@@ -312,7 +312,7 @@ def update_flight_filter_list(start_date, end_date, src, dst, flight_iata):
     flight_speed = qd.df_flights_metrics[qd.df_flights_metrics['flight_iata'] == res_iata]['speed'].iloc[0]
     flight_altitude = qd.df_flights_metrics[qd.df_flights_metrics['flight_iata'] == res_iata]['alt'].iloc[0]
 
-    ## Code for fight direction
+    ## Code for flight direction
     # fig = go.Figure(go.Barpolar(
     #     r=[100],
     #     theta=[flight_direction]
