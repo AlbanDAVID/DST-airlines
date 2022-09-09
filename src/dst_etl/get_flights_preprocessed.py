@@ -60,7 +60,7 @@ def get_flights_preprocessed():
     gates_arr=[]
 
     for i in tqdm(range (0,len(df_flights['flight_iata']))):
-        time.sleep(1.3)
+        time.sleep(0.5)
         val = df_flights['flight_iata'][i]
         print(val)
         url = base_url + "v1/operations/customerflightinformation/"+val+"/"+date
