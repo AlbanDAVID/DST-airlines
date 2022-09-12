@@ -51,7 +51,7 @@ try:
 
     # connexion à la BDD
 
-    name_database = 'airlines5'
+    name_database = static.name_bdd
     cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
     cursor = cnx.cursor()
     use_db = "use {name}".format(name = name_database)
