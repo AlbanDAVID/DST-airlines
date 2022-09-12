@@ -3,19 +3,20 @@ from datetime import datetime
 import numpy as np
 from tqdm import tqdm
 import time
+import static
 
 import boto3
-s3_client = boto3.client('s3', aws_access_key_id='AKIAUBEGQUNAZW3YUCNW' , aws_secret_access_key='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')
+s3_client = boto3.client('s3', aws_access_key_id= static.aws_access_key_id , aws_secret_access_key= static.aws_secret_access_key)
 
 import certifi
 from pymongo import MongoClient
 ca = certifi.where()
-client = MongoClient("mongodb+srv://user01:wpvPnKP2gdPW8inB@cluster0.tyo5f.mongodb.net/?retryWrites=true&w=majority", tlsCAFile=ca)
+client = MongoClient(static.cnx_mongodb, tlsCAFile=ca)
 
 import requests as r
 
 from sqlalchemy import create_engine
-my_conn = create_engine("mysql+pymysql://admin:hyadeb22!@airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com/airlines5")
+my_conn = create_engine(static.cnx_mysql_aws)
 
 def get_flights_preprocessed():
     db = client['data_airlines']
@@ -25,8 +26,8 @@ def get_flights_preprocessed():
     df_flights['flight_iata'] = df_flights['flight_icao'].apply(lambda x : x[1:])
     df_flights=df_flights.dropna(subset=["flight_iata"]).reset_index(drop=True)
 
-    client_key = "exzk4xtp9pr3txzssb2zqqd4"
-    client_secret = "PfMrRRe6AyyB4kTJWdSx"
+    client_key = static.client_id_luf
+    client_secret = static.client_secret_luf
     end_point = "https://api.lufthansa.com/v1/oauth/token"
     data = {'client_id': client_key, 'client_secret':client_secret , 'grant_type': 'client_credentials'}
     token_request = r.post(end_point, data)

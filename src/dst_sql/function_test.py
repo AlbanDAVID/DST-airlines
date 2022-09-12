@@ -5,13 +5,14 @@ import pandas as pd
 import numpy as np
 import os
 from datetime import datetime
+import static
 
 
 # Connection test (password and username verification)
 
 def aws_connection():
     try:
-        cnx = pymysql.connect(host = 'airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com', user = "admin", password = "hyadeb22!")
+        cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
         connection = "Successful connection"
     except OperationalError:
         connection = "Failed connection. Try another username/password"
@@ -29,8 +30,8 @@ def fetch_data_aws():
 
         # connexion à la BDD
 
-        name_database = 'airlines5'
-        cnx = pymysql.connect(host = 'airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com', user = "admin", password = "hyadeb22!")
+        name_database = static.name_bdd
+        cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
         cursor = cnx.cursor()
         use_db = "use {name}".format(name = name_database)
         cursor.execute(use_db)

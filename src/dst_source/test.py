@@ -13,13 +13,14 @@ import AirlabsStatic
 import AirlabsVariable
 import DstRealtime
 import requests
+import static
 
 
 
 ###########################################################Lufthansa####################################################
 
 # Authentification
-auth = lu.Authentication(client_key = "exzk4xtp9pr3txzssb2zqqd4", client_secret = "PfMrRRe6AyyB4kTJWdSx")
+auth = lu.Authentication(client_key = static.client_id_luf, client_secret = static.client_secret_luf)
 
 # get header
 header = auth.get_header()
@@ -60,7 +61,7 @@ ddv.pprint(ddv.get_flights(write_json=True,startDate="01JUL22",endDate="29JUL22"
 ###########################################################Airlabs####################################################
 ## Donnees temps reel 
 
-api_key = "12de9152-83be-44ae-a711-958190764930"
+api_key = static.api_key_airlabs3
 
 # Instanciation de la classe DstRealTime du module dst_extract
 drt = DstRealtime.DstRealTime(api_key)
@@ -90,7 +91,7 @@ dav = de.AirlabsVariable(api_key)
 
 dav.get_fleets_airlabs('LH')
 
-requests.get("https://airlabs.co/api/v9/airports?iata_code=CDG&api_key=12de9152-83be-44ae-a711-958190764930").json()
+requests.get("https://airlabs.co/api/v9/airports?iata_code=CDG&api_key={api_key}".format(api_key = api_key)).json()
 
 dd.get_nearest_airports_luf( 7.62, 44.54)
 dd.get_nearest_airports_luf( 48.50, 2.20)

@@ -1,12 +1,13 @@
 import pandas as pd
+import static
 
 import boto3
-s3_client = boto3.client('s3', aws_access_key_id='AKIAUBEGQUNAZW3YUCNW' , aws_secret_access_key='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')
+s3_client = boto3.client('s3', aws_access_key_id= static.aws_access_key_id , aws_secret_access_key= static.aws_secret_access_key)
 
 import certifi
 from pymongo import MongoClient
 ca = certifi.where()
-client = MongoClient("mongodb+srv://user01:wpvPnKP2gdPW8inB@cluster0.tyo5f.mongodb.net/?retryWrites=true&w=majority", tlsCAFile=ca)
+client = MongoClient(static.cnx_mongodb, tlsCAFile=ca)
 
 def get_aircrafts_preprocessed():
     db = client['data_airlines']

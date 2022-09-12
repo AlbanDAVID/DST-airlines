@@ -2,20 +2,21 @@ import requests
 import pandas as pd
 from collections import OrderedDict
 import json
+import static
 
 from sqlalchemy import create_engine
-my_conn = create_engine("mysql+pymysql://admin:hyadeb22!@airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com/airlines5")
+my_conn = create_engine(static.cnx_mysql_aws)
 
 import certifi
 from pymongo import MongoClient
 ca = certifi.where()
-client = MongoClient("mongodb+srv://user01:wpvPnKP2gdPW8inB@cluster0.tyo5f.mongodb.net/?retryWrites=true&w=majority", tlsCAFile=ca)
+client = MongoClient(static.cnx_mongodb, tlsCAFile=ca)
 
 from store_json_S3 import upload_file_airlabs
 from read_file_from_s3 import read_latest_file
 
 def get_rt_flights():
-    api_flights = requests.get("https://airlabs.co/api/v9/flights?airline_iata=LH&api_key=4ae6f50c-89d1-48b6-b7d9-80133df2745d")
+    api_flights = requests.get("https://airlabs.co/api/v9/flights?airline_iata=LH&api_key={api_key}".format(api_key = static.api_key_airlabs2))
     api_flights_response = api_flights.json()
     if len(api_flights_response['response'])>0:
         with open('flights_airlabs.json', 'w') as f:
@@ -59,7 +60,7 @@ def get_missing_airports(api_flights_df):
             url1 = x
             url2 = url2+"iata_code="+url1+"&"
 
-        api_airports = requests.get("https://airlabs.co/api/v9/airports?"+url2+"api_key=4ae6f50c-89d1-48b6-b7d9-80133df2745d")
+        api_airports = requests.get("https://airlabs.co/api/v9/airports?"+url2+"api_key={api_key}".format(api_key=static.api_key_airlabs2))
         api_airports_response = api_airports.json()
         iata_code_airport_from_api = [a_dict['iata_code'] for a_dict in api_airports_response['response']]
         list_missing_iata_code_after_api = list(set(list_missing_air) - set(iata_code_airport_from_api))
@@ -87,7 +88,7 @@ def get_missing_aircraft(api_flights_df):
             url1 = x
             url2 = url2+"hex="+url1+"&"
 
-        api_fleets = requests.get("https://airlabs.co/api/v9/fleets?"+url2+"api_key=4ae6f50c-89d1-48b6-b7d9-80133df2745d")
+        api_fleets = requests.get("https://airlabs.co/api/v9/fleets?"+url2+"api_key={api_key}".format(api_key = static.api_key_airlabs2))
         api_fleets_response = api_fleets.json()
 
         hex_code_from_api = [a_dict['hex'] for a_dict in api_fleets_response['response']]

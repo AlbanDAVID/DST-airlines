@@ -6,12 +6,15 @@ host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com"
 # bdd would like to be used
 name_bdd = 'airlines5'
 
-
+# plusieurs clés api airlabs ont été créées (pour gérer le nombre de requpetes limitées :)
 # airlabs api
 api_key_airlabs = '5f332e0a-f285-4358-a569-7ac30fc103ba'
 
 # airlabs api 2
 api_key_airlabs2 = '5f332e0a-f285-4358-a569-7ac30fc103ba'
+
+# airlabs api 3
+api_key_airlabs3 = '5f332e0a-f285-4358-a569-7ac30fc103ba'
 
 # api lufthansa
 client_id_luf = 'exzk4xtp9pr3txzssb2zqqd4'
