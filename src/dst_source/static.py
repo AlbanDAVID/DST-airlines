@@ -8,13 +8,13 @@ name_bdd = 'airlines5'
 
 # plusieurs clés api airlabs ont été créées (pour gérer le nombre de requpetes limitées :)
 # airlabs api
-api_key_airlabs = 'fdab6336-d852-468d-8045-fb8350748f74'
+api_key_airlabs = '5f332e0a-f285-4358-a569-7ac30fc103ba'
 
 # airlabs api 2
-api_key_airlabs2 = '4ae6f50c-89d1-48b6-b7d9-80133df2745d'
+api_key_airlabs2 = '5f332e0a-f285-4358-a569-7ac30fc103ba'
 
 # airlabs api 3
-api_key_airlabs3 = '12de9152-83be-44ae-a711-958190764930'
+api_key_airlabs3 = '5f332e0a-f285-4358-a569-7ac30fc103ba'
 
 # api lufthansa
 client_id_luf = 'exzk4xtp9pr3txzssb2zqqd4'
