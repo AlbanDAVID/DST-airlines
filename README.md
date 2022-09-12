@@ -1,6 +1,5 @@
 # Lufthansa Flight Tracker 
 
-
 ### Context
 Creation of a flight tracker app as part of the datascientest training project (dataengineer bootcamp training by datascientest, june 2022)
 Team : Houda EL-MIR, Yacine AMESROUY & Alban DAVID
