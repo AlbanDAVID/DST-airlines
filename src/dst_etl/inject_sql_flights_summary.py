@@ -1,13 +1,14 @@
 import pandas as pd
 from sqlalchemy import create_engine
-my_conn = create_engine("mysql+pymysql://admin:hyadeb22!@airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com/airlines5")
 import pymysql
+import static
 
+my_conn = create_engine(static.cnx_mysql_aws)
 
-def inject_sql_flights_summary(FLIGHTS_SUMMARY, name_database):
+def inject_AIRCRAFT(AIRCRAFT, name_database):
     # connection to database (AWD RDS)
-
-    cnx = pymysql.connect(host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com", user = "admin", password ="hyadeb22!")
+    name_database = static.name_bdd
+    cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
     cursor = cnx.cursor()
     use_db = "use {name}".format(name = name_database)
     cursor.execute(use_db)
