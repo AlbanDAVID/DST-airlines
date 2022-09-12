@@ -6,9 +6,10 @@ import LufthansaVariable as lv
 import AirlabsStatic as als
 import AirlabsVariable as alv
 import json
+import static
 
 ## Auth
-auth = du.Authentication(client_key="exzk4xtp9pr3txzssb2zqqd4", client_secret="PfMrRRe6AyyB4kTJWdSx")
+auth = du.Authentication(client_key=static.client_id_luf, client_secret= static.client_secret_luf)
 def test_auth():
     header = auth.get_header()
     assert header.get('accept') == 'application/json'
@@ -29,7 +30,7 @@ def test_luf_variable_data():
 
 ## DST Real Time
 def test_dst_real_time():
-    api_key = "12de9152-83be-44ae-a711-958190764930"
+    api_key = static.api_key_airlabs3
 
     # Instanciation de la classe DstRealTime du module dst_extract
     drt = dr.DstRealTime(api_key)
