@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import pymysql
 import sys
+import static
 
 
 #### Function to inject data into AIRCRAFT table ####
@@ -27,9 +28,9 @@ def inject_AIRCRAFT(df, name_database):
 
   # connection to database (AWD RDS)
 
-  cnx = pymysql.connect(host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com", user = "admin", password ="hyadeb22!")
+  cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
   cursor = cnx.cursor()
-  use_db = "use {name}".format(name = name_database)
+  use_db = "use {name}".format(name = static.name_bdd)
   cursor.execute(use_db)
   
   # get column index from column name 
@@ -80,9 +81,9 @@ def inject_COUNTRIES(df, name_database):
 
   # connection to database (AWD RDS)
 
-  cnx = pymysql.connect(host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com", user = "admin", password ="hyadeb22!")
+  cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
   cursor = cnx.cursor()
-  use_db = "use {name}".format(name = name_database)
+  use_db = "use {name}".format(name = static.name_bdd)
   cursor.execute(use_db)
   
   # get column index from column name 
@@ -132,9 +133,9 @@ def inject_AIRPORTS(df, name_database):
 
   # connection to database (AWD RDS)
 
-  cnx = pymysql.connect(host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com", user = "admin", password ="hyadeb22!")
+  cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
   cursor = cnx.cursor()
-  use_db = "use {name}".format(name = name_database)
+  use_db = "use {name}".format(name = static.name_bdd)
   cursor.execute(use_db)
 
   # get column index from column name 
@@ -185,9 +186,9 @@ def inject_CITIES(df, name_database):
 
   # connection to database (AWD RDS)
 
-  cnx = pymysql.connect(host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com", user = "admin", password ="hyadeb22!")
+  cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
   cursor = cnx.cursor()
-  use_db = "use {name}".format(name = name_database)
+  use_db = "use {name}".format(name = static.name_bdd)
   cursor.execute(use_db)
 
   # get column index from column name 
@@ -233,9 +234,9 @@ def inject_FLIGHTS_METRICS(df, name_database):
 
   # connection to database (AWD RDS)
 
-  cnx = pymysql.connect(host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com", user = "admin", password ="hyadeb22!")
+  cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
   cursor = cnx.cursor()
-  use_db = "use {name}".format(name = name_database)
+  use_db = "use {name}".format(name = static.name_bdd)
   cursor.execute(use_db)
 
   # get column index from column name 
@@ -284,9 +285,9 @@ def inject_FLIGHTS_SUMMARY(df, name_database):
 
   # connection to database (AWD RDS)
 
-  cnx = pymysql.connect(host = "airlines.cwpriwycnk6a.eu-west-2.rds.amazonaws.com", user = "admin", password ="hyadeb22!")
+  cnx = pymysql.connect(host = static.host, user = static.user, password = static.password)
   cursor = cnx.cursor()
-  use_db = "use {name}".format(name = name_database)
+  use_db = "use {name}".format(name = static.name_bdd)
   cursor.execute(use_db)
 
   # get column index from column name 
