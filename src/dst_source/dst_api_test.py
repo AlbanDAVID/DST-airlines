@@ -30,7 +30,7 @@ def test_luf_variable_data():
 
 ## DST Real Time
 def test_dst_real_time():
-    api_key = static.api_key_airlabs3
+    api_key = static.api_key_airlabs2
 
     # Instanciation de la classe DstRealTime du module dst_extract
     drt = dr.DstRealTime(api_key)
