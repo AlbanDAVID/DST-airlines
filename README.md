@@ -49,7 +49,7 @@ As we can see on this schema, there are several steps :
 Note : All the databases (S3, MongoDB and SQL) are in the cloud.
 
 ### b. SQL modelization
-There is our sql shema modelization :
+There is our sql schema modelization :
 
 ![Alt Text](readme_assests/sql_modelisation.png)
 
@@ -69,7 +69,7 @@ Detailed information can be found [here](src/dst_dashboard_dokcer/README.md)
 We did unit testing through all of our steps:
 
 1) API
-# HOUDA
+To see the file in detail, [click here](src/dst_source/dst_api_test.py)
 
 2) S3 + MONGO DB + CLEAN DATA
 # YACINE
