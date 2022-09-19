@@ -73,7 +73,7 @@ We did unit testing through all of our steps:
 To see the file in detail, [click here](src/dst_source/dst_api_test.py)
 
 2) S3 + MONGO DB + CLEAN DATA
-# YACINE
+
 
 3) SQL AND DASHBOARD 
 
