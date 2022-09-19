@@ -7,7 +7,7 @@ import AirlabsStatic as als
 import AirlabsVariable as alv
 import json
 import static
-
+"""
 ## Auth
 auth = du.Authentication(client_key=static.client_id_luf, client_secret= static.client_secret_luf)
 def test_auth():
@@ -27,7 +27,7 @@ def test_luf_variable_data():
     rf = du.RequestFactory(auth.get_header())
     lsv=lv.LufthansaVariable(rf)
     assert lsv.get_flight_route("JFK", "FRA",  "2022-09-08", False)['FlightStatusResource']['Flights']['Flight'][0]['Arrival']['AirportCode'] == 'FRA'
-"""
+
 ## DST Real Time
 def test_dst_real_time():
     api_key = static.api_key_airlabs2
