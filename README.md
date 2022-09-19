@@ -30,7 +30,7 @@ Team : Houda EL-MIR, Yacine AMESROUY & Alban DAVID
 We collected our data with two API:
 - Lufthansa API
 - Airlabs API
-# ARGUMENTER POURQUOI ON A PRIS DEUX API ET RESUMER LES DONEES RECOLTEES (airports, + le fait qu'il y ait statique et temps réel etc.) YACINE ?
+
 
 ## III - Data organization
 ### a. General organization
@@ -56,7 +56,7 @@ There is our sql schema modelization :
 
 
 ### c. data cleaning
-# EXPLIQUER LE NETTOYAGE DES DONNEES + MISE EN GARDE : Data not available yet et heure 01:01 lorsque c'est le cas. Yacine ?
+####### todo
 
 
 ## IV - Flight tracker app
